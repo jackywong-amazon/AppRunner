@@ -44,5 +44,6 @@ Actions:
       Type: EC2
     Environment:
       Connections:
-        - Name: "556513939552"
+        - Role: CodeCatalystWorkflowDevelopmentRole-awsjacky
+          Name: "556513939552"
       Name: Development
