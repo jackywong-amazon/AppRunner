@@ -59,7 +59,7 @@ Actions:
     Compute:
       Type: EC2
     Configuration:
-      StackName: app-runner-sample
+      StackName: app-runner
       ImageIdentifier: 556513939552.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
       Port: 8080
       AWSRegion: us-east-1
