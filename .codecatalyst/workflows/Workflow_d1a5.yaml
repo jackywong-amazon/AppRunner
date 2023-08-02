@@ -21,7 +21,7 @@ Actions:
         - Name: region
           Value: us-east-1
         - Name: registry
-          Value: 556513939552.dkr.ecr.us-east-1.amazonaws.com
+          Value: ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com
         - Name: image
           Value: python-app
     Outputs:
