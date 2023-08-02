@@ -59,9 +59,9 @@ Actions:
     Compute:
       Type: EC2
     Configuration:
-      Tags: "[]"
-      Wait: true
-      AWSRegion: ap-southeast-2
+      StackName: app-runner-sample
+      ImageIdentifier: ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com/${image}:latest
       Port: 8080
+      AWSRegion: ${region}
     DependsOn:
       - Build_03
