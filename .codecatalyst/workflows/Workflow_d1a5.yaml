@@ -60,8 +60,8 @@ Actions:
       Type: EC2
     Configuration:
       StackName: app-runner-sample
-      ImageIdentifier: ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com/${image}:latest
+      ImageIdentifier: 556513939552.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
       Port: 8080
-      AWSRegion: ${region}
+      AWSRegion: us-east-1
     DependsOn:
       - Build_03
