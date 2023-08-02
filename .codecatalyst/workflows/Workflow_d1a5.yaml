@@ -42,5 +42,5 @@ Actions:
     Environment:
       Connections:
         - Role: CodeCatalystWorkflowDevelopmentRole-awsjacky
-          Name: "556513939552"
+          Name: ${Secrets.accountid}
       Name: Development
