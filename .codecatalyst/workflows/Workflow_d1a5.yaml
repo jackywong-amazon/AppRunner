@@ -47,3 +47,21 @@ Actions:
         - Role: CodeCatalystWorkflowDevelopmentRole-awsjacky
           Name: "556513939552"
       Name: Development
+  DeployToAWSAppRunner_a0:
+    # Identifies the action. Do not modify this value.
+    Identifier: codecatalyst-labs/deploy-to-app-runner@v1.0.3
+    # Required; You can use an environment, AWS account connection, and role to access AWS resources.
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-awsjacky
+          Name: "556513939552"
+      Name: Development
+    Compute:
+      Type: EC2
+    Configuration:
+      Tags: "[]"
+      Wait: true
+      AWSRegion: ap-southeast-2
+      Port: 8080
+    DependsOn:
+      - Build_03
