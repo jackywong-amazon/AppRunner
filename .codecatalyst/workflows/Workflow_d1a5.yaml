@@ -20,8 +20,6 @@ Actions:
       Variables:
         - Name: region
           Value: us-east-1
-        - Name: registry
-          Value: ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com
         - Name: image
           Value: python-app
     Outputs:
@@ -32,11 +30,11 @@ Actions:
     Configuration:
       Steps:
         - Run: export account=`aws sts get-caller-identity --output text | awk '{ print $1 }'`
-        - Run: aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${registry}
+        - Run: aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com
         - Run: docker build -t appimage .
-        - Run: docker tag appimage ${registry}/${image}:${WorkflowSource.CommitId}
-        - Run: docker push --all-tags ${registry}/${image}
-        - Run: export IMAGE=${registry}/${image}:${WorkflowSource.CommitId}
+        - Run: docker tag appimage ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com/${image}:${WorkflowSource.CommitId}
+        - Run: docker push --all-tags ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com/${image}
+        - Run: export IMAGE=${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com/${image}:${WorkflowSource.CommitId}
     Compute:
       Type: EC2
     Environment:
