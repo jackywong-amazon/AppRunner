@@ -29,10 +29,10 @@ Actions:
     Configuration:
       Steps:
         - Run: export account=`aws sts get-caller-identity --output text | awk '{ print $1 }'`
-        - Run: aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com
-        - Run: docker build -t ${image} .
-        - Run: docker tag ${image}:latest ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com/${image}:latest
-        - Run: docker push ${Secrets.accountid}.dkr.ecr.us-east-1.amazonaws.com/${image}:latest
+        - Run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 556513939552.dkr.ecr.us-east-1.amazonaws.com
+        - Run: docker build -t python-app .
+        - Run: docker tag python-app:latest 556513939552.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
+        - Run: docker push 556513939552.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
     Compute:
       Type: EC2
     Environment:
