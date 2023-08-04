@@ -54,7 +54,7 @@ Actions:
     Configuration:
       StackName: app-runner
       ImageIdentifier: 556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
-      Port: 8080
+      Port: 80
       AWSRegion: us-east-1
     DependsOn:
       - Build_03
