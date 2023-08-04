@@ -28,11 +28,15 @@ Actions:
         Enabled: false
     Configuration:
       Steps:
-        - Run: export account=`aws sts get-caller-identity --output text | awk '{ print $1 }'`
-        - Run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 556513939552.dkr.ecr.us-east-1.amazonaws.com
+        - Run: export account=`aws sts get-caller-identity --output text | awk '{ print $1
+            }'`
+        - Run: aws ecr get-login-password --region us-east-1 | docker login --username AWS
+            --password-stdin 556513939552.dkr.ecr.us-east-1.amazonaws.com
         - Run: docker build -t vue-color-party .
-        - Run: docker tag vue-color-party:latest 556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
-        - Run: docker push 556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
+        - Run: docker tag vue-color-party:latest
+            556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
+        - Run: docker push
+            556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
     Compute:
       Type: EC2
     Environment:
@@ -56,5 +60,25 @@ Actions:
       ImageIdentifier: 556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
       Port: 80
       AWSRegion: us-east-1
+    DependsOn:
+      - Build_03
+  DeployToExistingAWSAppRunner:
+    # Identifies the action. Do not modify this value.
+    Identifier: codecatalyst-labs/deploy-to-app-runner@v1.0.3
+    # Required; You can use an environment, AWS account connection, and role to access AWS resources.
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-awsjacky
+          Name: "556513939552"
+      Name: Development
+    Compute:
+      Type: EC2
+    Configuration:
+      Tags: "[]"
+      Wait: true
+      ServiceArn: arn:aws:apprunner:us-east-1:556513939552:service/manual-deploy-apprunner/9a53b93697de42978a08e89969abda6a
+      AWSRegion: us-east-1
+      Port: 80
+      ImageIdentifier: 556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
     DependsOn:
       - Build_03
