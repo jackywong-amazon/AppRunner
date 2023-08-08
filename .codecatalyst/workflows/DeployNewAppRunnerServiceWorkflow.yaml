@@ -1,4 +1,4 @@
-Name: DeploytoNewAppRunnerServiceWorkflow
+Name: DeployNewAppRunnerService
 SchemaVersion: "1.0"
 
 #https://community.aws/code/snippets/ecs-codecatalyst-workflow
