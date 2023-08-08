@@ -9,41 +9,6 @@ Triggers:
 
 # Required - Define action configurations.
 Actions:
-  Build_03:
-    # Identifies the action. Do not modify this value.
-    Identifier: aws/build@v1.0.0
-    # Specifies the source and/or artifacts to pass to the action as input.
-    Inputs:
-      # Optional
-      Sources:
-        - WorkflowSource # This specifies that the action requires this Workflow as a source
-      Variables:
-        - Name: region
-          Value: us-east-1
-        - Name: image
-          Value: vue-color-party
-    Outputs:
-      # Optional; Automatically discover reports for popular test frameworks
-      AutoDiscoverReports:
-        Enabled: false
-    Configuration:
-      Steps:
-        - Run: export account=`aws sts get-caller-identity --output text | awk '{ print $1
-            }'`
-        - Run: aws ecr get-login-password --region us-east-1 | docker login --username AWS
-            --password-stdin 556513939552.dkr.ecr.us-east-1.amazonaws.com
-        - Run: docker build -t vue-color-party .
-        - Run: docker tag vue-color-party:latest
-            556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
-        - Run: docker push
-            556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
-    Compute:
-      Type: EC2
-    Environment:
-      Connections:
-        - Role: CodeCatalystWorkflowDevelopmentRole-awsjacky
-          Name: "556513939552"
-      Name: Development
   DeployToAWSAppRunner_a0:
     # Identifies the action. Do not modify this value.
     Identifier: codecatalyst-labs/deploy-to-app-runner@v1.0.3
@@ -56,12 +21,14 @@ Actions:
     Compute:
       Type: EC2
     Configuration:
+      Tags: "[]"
       StackName: app-runner
-      ImageIdentifier: 556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
-      Port: 80
+      Wait: true
       AWSRegion: us-east-1
+      Port: 80
+      ImageIdentifier: 556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
     DependsOn:
-      - Build_03
+      - PushToAmazonECR
   DeployToExistingAWSAppRunner:
     # Identifies the action. Do not modify this value.
     Identifier: codecatalyst-labs/deploy-to-app-runner@v1.0.3
@@ -81,7 +48,7 @@ Actions:
       Port: 80
       ImageIdentifier: 556513939552.dkr.ecr.us-east-1.amazonaws.com/vue-color-party:latest
     DependsOn:
-      - Build_03
+      - PushToAmazonECR
   PushToAmazonECR:
     # Identifies the action. Do not modify this value.
     Identifier: codecatalyst-labs/push-to-ecr@v1.0.1
